@@ -2,24 +2,18 @@ const express = require("express");
 
 const app = express();
 
-app.use("/",(req,res) => {
-    res.send("Hello Hello Hello");
+const {adminAuth} = require("./middlewares/auth")
+
+app.get("/admin/getAllData",adminAuth,(req,res) => {
+    
+        res.send("All data sent");
+   
 });
 
-app.use("/test",(req,res) => {
-    res.send("Hello from the server");
+app.get("/admin/deleteAllData",(req,res) => {
+       res.send("All data deleted");
 });
 
-app.use("/xyz",(req,res) => {
-    res.send("Hello ");
-});
-
-
-
-
-
-
-
-app.listen(3000,(req,res) =>{
+app.listen(3000,() => {
     console.log("Server is running sucessfully");
 })
