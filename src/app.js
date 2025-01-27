@@ -1,20 +1,39 @@
 const express = require("express");
 const connectDB = require("./config/database");
-
 const app = express();
+const cookieParser = require("cookie-parser");
+const jwt = require("jsonwebtoken");
+
+
 const User = require("./model/user");
 
-app.post("/signup", async (req,res) => {
-    const user = new User({firstName:"Vishal",
-    lastName:"Chaudhary",
-    email:"xyz",
-    gender:"Male",
-});
-await user.save();
-res.send("User is added sucessfully");
-});
+
+const { isJWT } = require("validator");
+
+app.use(express.json());
+app.use(cookieParser());
+
+const authRouter = require("./routes/auth");
+const profileRouter = require("./routes/profile");
+const requestRouter = require("./routes/request");
+
+app.use("/",authRouter);
+app.use("/",profileRouter);
+app.use("/",requestRouter);
 
 
+
+app.delete("/user", async (req,res) => {
+    const userId=req.body.userId;
+
+    try{
+        const user=await User.findByIdAndDelete(userId);
+        res.send("User deleted Sucessfully");
+    }
+    catch(err){
+        res.status(400).send("User deleted Sucessfully");
+    }
+})
 
 connectDB()
 .then(() => {
