@@ -5,7 +5,7 @@ const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 
 
-const User = require("./model/user");
+
 
 
 const { isJWT } = require("validator");
@@ -14,8 +14,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 const authRouter = require("./routes/auth");
-const profileRouter = require("./routes/profile");
-const requestRouter = require("./routes/request");
+const profileRouter = require("./routes/profiles");
+const requestRouter = require("./routes/requests");
 
 app.use("/",authRouter);
 app.use("/",profileRouter);

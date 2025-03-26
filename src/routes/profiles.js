@@ -2,6 +2,7 @@ const express = require("express");
 const profileRouter = express.Router();
 const {userAuth} = require("../middlewares/auth");
 const jwt = require("jsonwebtoken");
+const User = require("../model/user");
 
 
 profileRouter.get("/profile", userAuth, async (req,res) => {
@@ -27,7 +28,7 @@ profileRouter.get("/profile", userAuth, async (req,res) => {
      const cookies = req.cookies;
      const {token} = cookies;
  
-     const decodedMessage = await jwt.verify(token,"DEV@79TINDER$790");
+     const decodedMessage =  jwt.verify(token,"DEV@79TINDER$790");
      const {_id} = decodedMessage;
      console.log("Logged In User is:" + _id);
      const user = await User.findById(_id);

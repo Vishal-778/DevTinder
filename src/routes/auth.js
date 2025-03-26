@@ -3,8 +3,9 @@ const authRouter = express.Router();
 const bcrypt = require("bcrypt");
 const {validateSignUpData} = require("../utils/validation");
 const User = require("../model/user");
+const jwt = require("jsonwebtoken");
 
-app.post("/signup", async (req,res) => {
+authRouter.post("/signup", async (req,res) => {
     try{
         validateSignUpData(req);
         
@@ -34,7 +35,7 @@ app.post("/signup", async (req,res) => {
 }
 );
 
-app.post("/login", async(req,res) => {
+authRouter.post("/login", async(req,res) => {
     try{
         const {email,password} = req.body;
         const user = await User.findOne({email:email});

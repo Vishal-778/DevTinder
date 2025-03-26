@@ -16,6 +16,10 @@ const userSchema = mongoose.Schema(
         },
         gender:{
             type:String,
+            enum:{
+                values:["male","female","others"],
+                message:'{VALUE} is not a gender type',
+            },
         },
         password:{
             type:String,
@@ -24,6 +28,8 @@ const userSchema = mongoose.Schema(
         
     }
 );
+
+userSchema.index({firstName:1, lastName:1});
 
 const User = mongoose.model("User",userSchema);
 module.exports = User;
